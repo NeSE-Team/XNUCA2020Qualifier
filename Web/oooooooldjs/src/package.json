@@ -1,0 +1,17 @@
+{
+  "name": "oooooooldjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mads",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-validator": "^6.6.0",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.4.0"
+  }
+}
