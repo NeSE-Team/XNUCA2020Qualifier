@@ -76,7 +76,7 @@ this.constructor.constructor('return process.mainModule.require("child_process")
 
 ## 非预期
 
-看了下wp，3个师傅是预期做的，0ops的师傅竟然做到了任意原型链污染（惊
+看了下wp，0ops的师傅竟然做到了任意原型链污染（惊
 
 由于手贱加了个json中间件，允许传入object，导致可以污染任意值，payload如下
 
