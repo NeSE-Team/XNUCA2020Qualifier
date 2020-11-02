@@ -1,10 +1,10 @@
 # WorkDeep
 这题的流程比较复杂，但是每个知识点都不算很难，主要算是考察选手的综合能力（比如还有和逆向手的协作）。先讲一下整个的基本流程，再分点具体展开介绍。整体的攻击流程包括：
 * 任意文件读取获得client的binary、node服务的源码、rabbitmq的配置文件、环境变量、ssh配置等题目所需信息（当然是一步步按照需求获取的）
-* 利用node服务中对uuid的错误使用，预测secret的值，进而获得在http://127.0.0.1:8888域下的任意js代码执行
-* 由于rabbitmq的配置中设置了对于http://127.0.0.1:8888源的cors策略，可以通过fetch等方法向rabbitmq的exchange发送任务达到和client交互的目的
+* 利用node服务中对uuid的错误使用，预测secret的值，进而获得在`http://127.0.0.1:8888`域下的任意js代码执行
+* 由于rabbitmq的配置中设置了对于`http://127.0.0.1:8888`源的cors策略，可以通过fetch等方法向rabbitmq的exchange发送任务达到和client交互的目的
 * scp命令受CVE-2020-15778的影响，ssh的server端可以rce。反引号不受waf以及os.Exec的限制，同时通过读取ctf用户的id_rsa.pub和authorized_keys文件可以知道本地ctf用户可以ssh，因此利用这个漏洞可以获得ctf用户的执行权限。
-* 由于flag在root目录，利用client的备份功能修改/etc/passwd提权到root获得flag。
+* 由于flag在root目录，利用client的备份功能修改`/etc/passwd`提权到root获得flag。
 
 ## 任意文件读取
 这一步的灵感来源于CVE-2018-1271，本质上是cleanPath逻辑认为`//`是一个空目录，而linux系统则认为这只是两个路径分隔符。因此 `/view?filename=.////////////////////////../../../../../etc/passwd` 这样的文件就可以bypass cleanPath函数。  
@@ -216,7 +216,7 @@ app.listen(port, () => console.log(`listening on port ${port}!`))
 
 ## 与rabbitmq交互
 获取secret值后，我们可以直接通过/iframe接口进行html注入，无需再绕过dompurify的过滤。但是rabbitmq的http服务开在15672端口，rabbitmq默认时禁止跨域的，basic认证的auth头无法传递。  
-这时需要读取rabbitmq的配置文件`/etc/rabbitmq/rabbitmq.conf`获取到配置信息`management.cors.allow_origins.1 = http://127.0.0.1:8888`,也就是说在http://127.0.0.1:8888下可以跨域发送请求而被rabbitmq接受。 
+这时需要读取rabbitmq的配置文件`/etc/rabbitmq/rabbitmq.conf`获取到配置信息`management.cors.allow_origins.1 = http://127.0.0.1:8888`,也就是说在`http://127.0.0.1:8888`下可以跨域发送请求而被rabbitmq接受。 
 rabbitmq的用户名密码以及队列信息可以在`/proc/self/environ`中获取，和rabbitmq交互的js代码如下
 ```
 username = "backupadmin";
