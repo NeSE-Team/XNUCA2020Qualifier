@@ -132,7 +132,7 @@ console.log(Object.prototype)
 {"a.b":"123"}
 ```
 
-express-validator其实是不会对`a.b`进行验证的，因为这里的`a.b`相当于是一个`key`，在传入`express`的时候并不会进行自动的`unflatten`而变成一个a对象包含一个b对象。但是`express-validator`内部都是通过lodash的`_get`和`_set`对对象进行赋值和取值，当传入类似`a.b`这种`key`给`_set`的时候，lodash会误以为给某对象的a对象的b对象进行赋值，所以会先创建a对象，然后创建b对象，最后进行赋值，而不是单纯的给某对象的`a.b`这个key进行赋值。为了防止这种误操作的情况出现，`express-validator`也是对key进行了检查，当存在特殊字符的时候会进行一些处理，也就是前面提到的对`key`动的手脚XD
+`express-validator`其实是不会对`a.b`进行验证的，因为这里的`a.b`相当于是一个`key`，在传入`express`的时候并不会进行自动的`unflatten`而变成一个a对象包含一个b对象。但是`express-validator`内部都是通过lodash的`_get`和`_set`对对象进行赋值和取值，当传入类似`a.b`这种`key`给`_set`的时候，lodash会误以为给某对象的a对象的b对象进行赋值，所以会先创建a对象，然后创建b对象，最后进行赋值，而不是单纯的给某对象的`a.b`这个key进行赋值。为了防止这种误操作的情况出现，`express-validator`也是对key进行了检查，当存在特殊字符的时候会进行一些处理，也就是前面提到的对`key`动的手脚XD
 
 ![image-20201021161844871](./assets/image-20201021161844871.png)
 
