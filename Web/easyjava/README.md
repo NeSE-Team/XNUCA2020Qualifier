@@ -257,4 +257,4 @@ try{
 
 ## 0x02 exp
 
-[exp.java]()
+[exp.java](https://github.com/NeSE-Team/XNUCA2020Qualifier/blob/main/Web/easyjava/ImageUtil.java)
