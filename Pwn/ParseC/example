@@ -1,0 +1,27 @@
+// Fibonacci sequence
+func fun{ 
+	if(x <= 2){  
+		return(1);  
+	}
+	y = 0;
+	x = x - 1;
+	y = fun(x);
+	x = x - 1;
+	return(y + fun(x));
+};
+
+// save the Fibonacci sequence of 1 to 15 in an array 
+array arr(15);	
+x = 1;
+while( x <= 15 ){
+	arr[x - 1] = fun(x);
+	x = 1 + x;
+}
+
+puts("Fibonacci sequence:");
+// print the Fibonacci sequence of 1 to 15
+i = 0;
+while(i < 15){			
+	print(arr[i]);
+	i=i+1;
+}
