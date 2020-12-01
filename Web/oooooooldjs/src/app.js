@@ -11,7 +11,7 @@ const {
 const {
 	Data,
 	DataRepository
-} = require('../entity')
+} = require('./entity')
 const {
 	requests
 } = require('./util')
